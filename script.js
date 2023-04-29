@@ -1,72 +1,54 @@
-const flags = [
-  {
-    country: "United States",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1280px-Flag_of_the_United_States.svg.png",
-  },
-  {
-    country: "France",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/1280px-Flag_of_France.svg.png",
-  },
-  {
-    country: "Japan",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png",
-  },
-  {
-    country: "Germany",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1280px-Flag_of_Germany.svg.png",
-  },
-  {
-    country: "Brazil",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/1280px-Flag_of_Brazil.svg.png",
-  },
-  {
-    country: "Canada",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Canada_%28Pantone%29.svg/1280px-Flag_of_Canada_%28Pantone%29.svg.png",
-  },
-  {
-    country: "India",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1280",
-  },
-];
+const flagImg = document.getElementById('flag-img');
+const quizForm = document.getElementById('quiz-form');
+const answerInput = document.getElementById('answer');
+const resultParagraph = document.getElementById('result');
+const scoreParagraph = document.getElementById('score');
+const scoreValue = document.getElementById('score-value');
 
-const flagImg = document.getElementById("flag-img");
-const quizForm = document.getElementById("quiz-form");
-const answerInput = document.getElementById("answer");
-const resultParagraph = document.getElementById("result");
-
+let flags = [];
 let currentFlag = {};
+let score = 0;
+
+async function fetchFlags() {
+    try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const data = await response.json();
+
+        flags = data.map(country => ({
+            country: country.name.common,
+            imageUrl: country.flags.png,
+        }));
+        displayFlag();
+    } catch (error) {
+        console.error('Error fetching flags:', error);
+    }
+}
 
 function getRandomFlag() {
-  const randomIndex = Math.floor(Math.random() * flags.length);
-  return flags[randomIndex];
+    const randomIndex = Math.floor(Math.random() * flags.length);
+    return flags[randomIndex];
 }
 
 function displayFlag() {
-  currentFlag = getRandomFlag();
-  flagImg.src = currentFlag.imageUrl;
+    currentFlag = getRandomFlag();
+    flagImg.src = currentFlag.imageUrl;
 }
 
 function checkAnswer(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  if (
-    answerInput.value.trim().toLowerCase() === currentFlag.country.toLowerCase()
-  ) {
-    resultParagraph.textContent = "Correct! Good job!";
-  } else {
-    resultParagraph.textContent = `Wrong. The correct answer is ${currentFlag.country}.`;
-  }
+    if (answerInput.value.trim().toLowerCase() === currentFlag.country.toLowerCase()) {
+        resultParagraph.textContent = 'Correct! Good job!';
+        score++;
+    } else {
+        resultParagraph.textContent = `Wrong. The correct answer is ${currentFlag.country}.`;
+        score--;
+    }
 
-  answerInput.value = "";
-  displayFlag();
+    scoreValue.textContent = score;
+    answerInput.value = '';
+    displayFlag();
 }
 
-quizForm.addEventListener("submit", checkAnswer);
-displayFlag();
+quizForm.addEventListener('submit', checkAnswer);
+fetchFlags();

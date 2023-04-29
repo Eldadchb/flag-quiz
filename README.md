@@ -17,13 +17,3 @@ A fun and interactive game to test your knowledge of country flags. The goal is 
 
 1. Clone this repository or download the source files to your computer.
 2. Open the `index.html` file in a web browser to play the game.
-
-## How to Add More Flags
-
-To add more flags to the game, simply update the `flags` array in the `script.js` file with the following object structure:
-
-```javascript
-{
-    country: 'Country Name',
-    imageUrl: 'URL of the flag image',
-}
