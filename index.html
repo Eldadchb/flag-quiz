@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flag Quiz Game</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <h1>Flag Quiz Game</h1>
     <div id="flag-container">
-        <img id="flag-img" src="" alt="Country flag">
+      <img id="flag-img" src="" alt="Country flag" />
     </div>
     <form id="quiz-form">
-        <label for="answer">Enter the country name:</label>
-        <input type="text" id="answer" name="answer" required>
-        <button type="submit">Submit</button>
+      <label for="answer">Enter the country name:</label>
+      <input type="text" id="answer" name="answer" required />
+      <button type="submit">Submit</button>
     </form>
+    <button type="button" id="hint-button">Hint</button>
     <p id="result"></p>
     <p id="score">Score: <span id="score-value">0</span></p>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

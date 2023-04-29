@@ -34,6 +34,21 @@ function displayFlag() {
   flagImg.src = currentFlag.imageUrl;
 }
 
+function showHint() {
+  if (score <= 0) {
+    resultParagraph.textContent = "You need at least 1 point to get a hint.";
+    return;
+  }
+
+  const hint = currentFlag.country.slice(0, 3) + "...";
+  resultParagraph.textContent = `Hint: ${hint}`;
+  score--;
+  scoreValue.textContent = score;
+}
+
+const hintButton = document.getElementById("hint-button");
+hintButton.addEventListener("click", showHint);
+
 function checkAnswer(event) {
   event.preventDefault();
 
